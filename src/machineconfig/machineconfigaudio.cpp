@@ -100,6 +100,7 @@ MachineConfigAudio::MachineConfigAudio(Machine *machine,
     m_hostSoundSystemComboBox->addItem("pa");
     m_hostSoundSystemComboBox->addItem("spice");
     m_hostSoundSystemComboBox->addItem("wav");
+    m_hostSoundSystemComboBox->addItem("oss");
     m_hostSoundSystemComboBox->addItem("none");
     m_hostSoundSystemComboBox->setCurrentText(this->m_machine->getHostSoundSystem());
 
