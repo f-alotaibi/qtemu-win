@@ -945,20 +945,13 @@ QStringList Machine::generateMachineCommand()
     qemuCommand << "-accel";
     qemuCommand << accelerators;
 
-    QString audioCards;
-    bool firstAudio = true;
     QStringListIterator audioIterator(this->audio);
     while (audioIterator.hasNext()) {
-        if(firstAudio) {
-            firstAudio = false;
-        } else {
-            audioCards.append(", ");
-        }
-        audioCards.append(audioIterator.next());
+        qemuCommand << "-audio";
+        qemuCommand << "driver=" + getHostSoundSystem() + ",model=" + \
+                        audioIterator.next() + ",id=snd0";
     }
 
-    qemuCommand << "-soundhw";
-    qemuCommand << audioCards;
 
     QString bootOrder;
     QStringListIterator bootIterator(this->boot->bootOrder());
