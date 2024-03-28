@@ -50,7 +50,7 @@ ProcessorConfigTab::ProcessorConfigTab(Machine *machine,
     m_CPUTypeLayout->addWidget(m_CPUTypeLabel);
     m_CPUTypeLayout->addWidget(m_CPUType);
 
-    m_CPUCountLabel = new QLabel(tr("CPU Count") + ":", this);
+    m_CPUCountLabel = new QLabel(tr("CPU count") + ":", this);
     m_CPUCountLabel->setWordWrap(true);
 
     m_CPUCountSpinBox = new QSpinBox(this);
