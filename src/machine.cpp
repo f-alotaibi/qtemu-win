@@ -729,6 +729,9 @@ void Machine::runMachine(QEMU *QEMUGlobalObject)
         return;
     }
 
+    // Log QEMU command in the logs file to help the debug process
+    Logger::logQtemuAction(program + ' ' + args.join(' '));
+    
     // Start a timer to measure the execution time
     QElapsedTimer timer;
     timer.start();
