@@ -726,12 +726,28 @@ void Machine::runMachine(QEMU *QEMUGlobalObject)
         SystemUtils::showMessage(tr("QEMU - Binary not found"),
                                  tr("QEMU binary not found"),
                                  QMessageBox::Information);
+        return;
     }
 
-    // Log QEMU command in the logs file to help the debug process
-    Logger::logQtemuAction(program + ' ' + args.join(' '));
+    // Start a timer to measure the execution time
+    QElapsedTimer timer;
+    timer.start();
 
+    // Start the QEMU process
     this->m_machineProcess->start(program, args);
+
+    // Wait for the process to finish
+    bool finished = this->m_machineProcess->waitForFinished(1000);
+    qint64 elapsed = timer.elapsed();
+
+    // Check if the process finished in less than 1 second
+    if (finished && elapsed < 1000) {
+        QMessageBox::information(nullptr, tr("Suspicious Activity Detected"),
+                                 tr("The QEMU execution terminated unexpectedly fast (within 1 second), which might indicate an issue.\n"
+                                    "For troubleshooting, you can try running the QEMU command manually:\n\n") +
+                                 program + ' ' + args.join(' '));
+    }
+
 #ifdef Q_OS_WIN
     QSettings settings;
     settings.beginGroup("Configuration");

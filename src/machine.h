@@ -31,6 +31,8 @@
 #include <QSettings>
 #include <QTextCodec>
 #include <QDebug>
+#include <QElapsedTimer>
+
 
 // Local
 #include "qemu.h"
