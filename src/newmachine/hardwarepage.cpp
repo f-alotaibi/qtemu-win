@@ -524,7 +524,7 @@ NetworkTab::NetworkTab(Machine *machine,
     connect(m_withNetworkRadio, &QAbstractButton::toggled,
                 this, &NetworkTab::networkState);
 
-    m_withoutNetworkRadio = new QRadioButton(tr("No network (No network cards installed on this machine"), this);
+    m_withoutNetworkRadio = new QRadioButton(tr("No network (No network cards installed on this machine)"), this);
 
     m_networkLayout = new QVBoxLayout();
     m_networkLayout->addWidget(m_withNetworkRadio);
