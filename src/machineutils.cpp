@@ -1,7 +1,7 @@
 /*
  * This file is part of QtEmu project.
  * Copyright (C) 2006-2009 Urs Wolfer <uwolfer @ fwo.ch> and Ben Klopfenstein <benklop gmail com>
- * Copyright (C) 2017-2024 Sergio Carlavilla <sergio.carlavilla91 @ gmail.com>
+ * Copyright (C) 2017-2025 Sergio Carlavilla <sergio.carlavilla91 @ gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -126,7 +126,7 @@ void MachineUtils::fillMachineObject(Machine *machine,
     machine->setMaxHotCPU(cpuObject["maxHotCPU"].toInt());
     machine->setSocketCount(cpuObject["socketCount"].toInt());
     machine->setThreadsCore(cpuObject["threadsCore"].toInt());
-    machine->setHostSoundSystem(machineJSON["hostsoundsystem"].toString());
+    machine->setHostSoundSystem(machineJSON["hostSoundSystem"].toString());
     machine->setAudio(MachineUtils::getSoundCards(machineJSON["audio"].toArray()));
     machine->setAccelerator(MachineUtils::getAccelerators(machineJSON["accelerator"].toArray()));
     machine->setBoot(machineBoot);

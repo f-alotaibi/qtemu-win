@@ -1,6 +1,6 @@
 /*
  * This file is part of QtEmu project.
- * Copyright (C) 2017-2024 Sergio Carlavilla <sergio.carlavilla91 @ gmail.com>
+ * Copyright (C) 2017-2025 Sergio Carlavilla <sergio.carlavilla91 @ gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1089,7 +1089,6 @@ bool Machine::saveMachine()
     machineJSONObject["network"]     = this->useNetwork;
     machineJSONObject["path"]        = QDir::toNativeSeparators(this->path);
     machineJSONObject["uuid"]        = this->uuid;
-    machineJSONObject["hostsoundsystem"] = this->hostSoundSystem;
     machineJSONObject["binary"] = "qemu-system-x86_64";
 
     QJsonObject cpu;
@@ -1135,6 +1134,26 @@ bool Machine::saveMachine()
 
     machineJSONObject["accelerator"] = QJsonArray::fromStringList(this->accelerator);
     machineJSONObject["audio"] = QJsonArray::fromStringList(this->audio);
+
+    if (!this->hostSoundSystem.isEmpty()) {
+        machineJSONObject["hostSoundSystem"] = this->hostSoundSystem;
+    } else {
+#ifdef Q_OS_LINUX
+        machineJSONObject["hostSoundSystem"] = "alsa";
+#endif
+#ifdef Q_OS_WIN
+        machineJSONObject["hostSoundSystem"] = "wav";
+#endif
+#ifdef Q_OS_MACOS
+        machineJSONObject["hostSoundSystem"] = "oss";
+#endif
+#ifdef Q_OS_FREEBSD
+        machineJSONObject["hostSoundSystem"] = "oss";
+#endif
+#ifdef Q_OS_NETBSD
+        machineJSONObject["hostSoundSystem"] = "oss";
+#endif
+    }
 
     QJsonDocument machineJSONDocument(machineJSONObject);
 
