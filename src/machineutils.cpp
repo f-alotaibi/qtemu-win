@@ -117,7 +117,7 @@ void MachineUtils::fillMachineObject(Machine *machine,
     machine->setUseNetwork(machineJSON["network"].toBool());
     machine->setConfigPath(machineConfigPath);
     machine->setPath(machineJSON["path"].toString());
-    machine->setUuid(machineJSON["uuid"].toString());
+    machine->setUuid(QUuid::fromString(machineJSON["uuid"].toString()));
     machine->setGPUType(gpuObject["GPUType"].toString());
     machine->setKeyboard(gpuObject["keyboard"].toString());
     machine->setCPUType(cpuObject["CPUType"].toString());

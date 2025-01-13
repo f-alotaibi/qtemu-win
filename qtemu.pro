@@ -26,17 +26,16 @@
 ##-------------------------------------------------
 
 message("Generating Makefile for QtEmu... $$escape_expand(\\n)")
-
-QT += core gui widgets network
-message("Building with Qt v$$QT_VERSION")
-
-lessThan(QT_MAJOR_VERSION, 5) {
-    warning(" >>> You're trying to build with Qt 4")
-    warning(" >>> This version of QtEmu requires Qt 5")
+lessThan(QT_MAJOR_VERSION, 6) {
+    warning(" >>> You're trying to build with Qt 5")
+    warning(" >>> This version of QtEmu-win requires Qt 6")
     warning(" >>> You might need to use qmake-qt5 instead $$escape_expand(\\n)")
 
     error("Aborting!")
 }
+
+QT += core gui widgets network
+message("Building with Qt v$$QT_VERSION")
 
 # SOURCE_DATE_EPOCH is read from environment, to enable reproducible builds in Debian
 source_date_epoch = $$(SOURCE_DATE_EPOCH)

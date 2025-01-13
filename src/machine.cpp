@@ -190,7 +190,7 @@ void Machine::setConfigPath(const QString &value)
  * with QUuid
  * Ex: {fc6a2dd5-3c31-401f-a9c7-86ad6190a77f}
  */
-QString Machine::getUuid() const
+QUuid Machine::getUuid() const
 {
     return uuid;
 }
@@ -202,7 +202,7 @@ QString Machine::getUuid() const
  * with QUuid
  * Ex: {fc6a2dd5-3c31-401f-a9c7-86ad6190a77f}
  */
-void Machine::setUuid(const QString &value)
+void Machine::setUuid(const QUuid &value)
 {
     uuid = value;
 }
@@ -836,7 +836,7 @@ void Machine::readMachineStandardOut()
 #endif
     QString standardOut = rawStandardOut;
     QStringList splitStandardOut = standardOut.split("[K");
-    QString cleanStandardOut = splitStandardOut.last().remove(QRegExp("\\[[KD]."));
+    QString cleanStandardOut = splitStandardOut.last().remove(QRegularExpression("\\[[KD]."));
     // Remove space characters, included \r \t \n
     cleanStandardOut = cleanStandardOut.simplified();
 
@@ -926,7 +926,7 @@ QStringList Machine::generateMachineCommand()
         qemuCommand << this->type;
     }
 
-    QString uuid(this->uuid);
+    QString uuid(this->uuid.toString(QUuid::WithBraces));
     qemuCommand << "-uuid";
     qemuCommand << uuid.remove("{").remove("}");
 
@@ -1088,7 +1088,7 @@ bool Machine::saveMachine()
     machineJSONObject["RAM"]         = this->RAM;
     machineJSONObject["network"]     = this->useNetwork;
     machineJSONObject["path"]        = QDir::toNativeSeparators(this->path);
-    machineJSONObject["uuid"]        = this->uuid;
+    machineJSONObject["uuid"]        = this->uuid.toString(QUuid::WithBraces);
     machineJSONObject["binary"] = "qemu-system-x86_64";
 
     QJsonObject cpu;
@@ -1203,7 +1203,7 @@ void Machine::insertMachineConfigFile()
 
     // Create the new machine
     QJsonObject machine;
-    machine["uuid"]       = this->uuid;
+    machine["uuid"]       = this->uuid.toString(QUuid::WithBraces);
     machine["path"]       = QDir::toNativeSeparators(this->path);
     machine["configpath"] = QDir::toNativeSeparators(this->configPath);
     machine["icon"]       = this->OSVersion.toLower().replace(" ", "_");
