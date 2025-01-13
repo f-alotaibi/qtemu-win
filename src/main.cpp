@@ -55,13 +55,17 @@ int main(int argc, char *argv[])
                      .arg(__TIME__);
     #endif
 
-    QSettings settings;
-
     // Data folder
-    settings.beginGroup("DataFolder");
     QDir dataDirectory;
     QString dataDirectoryPath = QDir::toNativeSeparators(QDir::homePath() + "/.qtemu/");
     QString dataDirectoryLogs = QDir::toNativeSeparators(dataDirectoryPath + "logs");
+
+#ifdef Q_OS_WIN
+    QSettings settings(dataDirectoryPath + "settings.ini", QSettings::IniFormat);
+#else
+    QSettings settings;
+#endif
+    settings.beginGroup("DataFolder");
 
     if (!dataDirectory.exists(dataDirectoryPath)) {
         dataDirectory.mkdir(dataDirectoryPath);
