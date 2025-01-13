@@ -61,10 +61,10 @@ int main(int argc, char *argv[])
     QString dataDirectoryLogs = QDir::toNativeSeparators(dataDirectoryPath + "logs");
 
 #ifdef Q_OS_WIN
-    QSettings settings(dataDirectoryPath + "settings.ini", QSettings::IniFormat);
-#else
-    QSettings settings;
+    QSettings::setDefaultFormat(QSettings::IniFormat);
 #endif
+
+    QSettings settings;
     settings.beginGroup("DataFolder");
 
     if (!dataDirectory.exists(dataDirectoryPath)) {
