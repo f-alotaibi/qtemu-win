@@ -79,9 +79,6 @@ int main(int argc, char *argv[])
     settings.setValue("QtEmuLogs", dataDirectoryLogs);
     settings.endGroup();
 
-    settings.beginGroup("Configuration");
-    settings.endGroup();
-
     // Launch first run winzard
     settings.beginGroup("Configuration");
     bool runFirstRunWizard = settings.value("firstrunwizard", true).toBool();
