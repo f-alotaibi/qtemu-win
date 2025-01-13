@@ -75,56 +75,8 @@ int main(int argc, char *argv[])
     settings.setValue("QtEmuLogs", dataDirectoryLogs);
     settings.endGroup();
 
-    // Translations
-    QTranslator translatorQt;
-    QTranslator translatorQtEmu;
-    QString languageFile;
-    QString language;
-    bool languageLoaded;
-
     settings.beginGroup("Configuration");
-    language = settings.value("language", "en").toString();
     settings.endGroup();
-
-    qDebug() << "The language loaded" << language;
-
-    if (language.isEmpty()) {
-        language = QLocale::system().name();
-    }
-
-    languageFile = QString("qt_%1").arg(language);
-
-    qInfo() <<  "\n"
-            << "Using Qt translation "
-            << QLibraryInfo::path(QLibraryInfo::TranslationsPath)
-            << "/"
-            << languageFile
-            << "\n";
-
-    languageLoaded = translatorQt.load(languageFile, QLibraryInfo::path(QLibraryInfo::TranslationsPath));
-
-    if (languageLoaded) {
-        qInfo() << "Language loaded";
-        qtemuApp.installTranslator(&translatorQt);
-    } else {
-        qInfo() << "Language unavailable";
-    }
-
-    languageFile = QString(":/translations/qtemu_%1").arg(language);
-
-    qInfo() << "\n"
-              << "Using QtEmu translation "
-              << languageFile.toStdString()
-              << "\n";
-
-    languageLoaded = translatorQtEmu.load(languageFile);
-
-    if (languageLoaded) {
-        qInfo() << "Language loaded";
-        qtemuApp.installTranslator(&translatorQtEmu);
-    } else {
-        qInfo() << "Language unavailable";
-    }
 
     // Launch first run winzard
     settings.beginGroup("Configuration");
