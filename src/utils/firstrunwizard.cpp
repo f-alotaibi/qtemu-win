@@ -82,14 +82,37 @@ FirstRunWizard::~FirstRunWizard()
 void FirstRunWizard::closeEvent(QCloseEvent *event)
 {
     QSettings settings;
+    if (!this->m_qemuBinariesPage->isWizardComplete()) {
+        settings.beginGroup("Configuration");
+#ifdef Q_OS_LINUX
+        QString qemuDefaultBinariesPath = QDir::toNativeSeparators("/usr/bin");
+#endif
+#ifdef Q_OS_WIN
+        QString qemuDefaultBinariesPath = QDir::toNativeSeparators("C:/Program Files/qemu");
+#endif
+#ifdef Q_OS_MACOS
+        QString qemuDefaultBinariesPath = QDir::toNativeSeparators("/usr/local/bin/");
+#endif
+#ifdef Q_OS_FREEBSD
+        QString qemuDefaultBinariesPath = QDir::toNativeSeparators("/usr/local/bin/");
+#endif
+#ifdef Q_OS_NETBSD
+        QString qemuDefaultBinariesPath = QDir::toNativeSeparators("/usr/local/bin/");
+#endif
+
+        settings.setValue("qemuBinaryPath", qemuDefaultBinariesPath);
+        settings.setValue("machinePath", QDir::toNativeSeparators(QDir::homePath()));
+#ifdef Q_OS_WIN
+        settings.setValue("qemuMonitorHost", "localhost");
+        settings.setValue("qemuMonitorPort", 6060);
+#endif
+        settings.endGroup();
+        this->m_warningFinishMessageBox->exec();
+    }
     settings.beginGroup("Configuration");
     settings.setValue("firstrunwizard", false);
     settings.endGroup();
     settings.sync();
-
-    if (!this->m_qemuBinariesPage->isWizardComplete()) {
-        this->m_warningFinishMessageBox->exec();
-    }
 
     event->accept();
 }
