@@ -745,10 +745,13 @@ void Machine::runMachine(QEMU *QEMUGlobalObject)
 
     // Check if the process finished in less than 1 second
     if (finished && elapsed < 1000) {
-        QMessageBox::information(nullptr, tr("Suspicious Activity Detected"),
-                                 tr("The QEMU execution terminated unexpectedly fast (within 1 second), which might indicate an issue.\n"
-                                    "For troubleshooting, you can try running the QEMU command manually:\n\n") +
-                                     program + ' ' + args.join(' '));
+        QMessageBox msgBox;
+        msgBox.setTextInteractionFlags(Qt::TextSelectableByMouse | Qt::TextSelectableByKeyboard);
+        msgBox.setWindowTitle(QObject::tr("Suspicious Activity Detected"));
+        msgBox.setText(QObject::tr("The QEMU execution terminated unexpectedly fast (within 1 second), which might indicate an issue.\n"
+                                   "For troubleshooting, you can try running the QEMU command manually:\n\n") +
+                       program + ' ' + args.join(' '));
+        msgBox.exec();
     }
 
 #ifdef Q_OS_WIN
