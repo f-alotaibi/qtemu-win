@@ -139,17 +139,6 @@ class ConfigWindow : public QWidget {
 
         QWidget *m_languagePageWidget;
 
-        // Start
-        // QtEmu 2.x
-        /*QVBoxLayout *m_startPageLayout;
-        QWidget *m_startPageWidget;
-
-        QPlainTextEdit *m_beforeStart;
-        QPlainTextEdit *m_afterExit;
-
-        QLabel *m_beforeStartLabel;
-        QLabel *m_afterExitLabel;*/
-
         // Proxy
         QFormLayout *m_proxyPageLayout;
         QWidget *m_proxyPageWidget;
@@ -185,7 +174,6 @@ class ConfigWindow : public QWidget {
         // Methods
         void createGeneralPage();
         void createLanguagePage();
-        void createStartPage();
         void createProxyPage();
         void createQEMUPage();
         void insertBinariesInTree();
