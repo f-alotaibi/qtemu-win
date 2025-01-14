@@ -104,7 +104,7 @@ void FirstRunWizard::closeEvent(QCloseEvent *event)
         settings.setValue("machinePath", QDir::toNativeSeparators(QDir::homePath()));
 #ifdef Q_OS_WIN
         settings.setValue("qemuMonitorHost", "localhost");
-        settings.setValue("qemuMonitorPort", 6060);
+        settings.setValue("qemuMonitorPort", 6000);
 #endif
         settings.endGroup();
         this->m_warningFinishMessageBox->exec();
