@@ -102,7 +102,7 @@ ProcessorConfigTab::ProcessorConfigTab(Machine *machine,
     m_socketLayout->addWidget(m_threadsCoreLabel);
     m_socketLayout->addWidget(m_threadsCoreSpinBox);
 
-    m_maxHotCPULabel = new QLabel(tr("Maximum number of hotpluggable CPUs") + ":", this);
+    m_maxHotCPULabel = new QLabel(tr("Maximum number of hotpluggable CPUs\nCPU count * Socket count * Cores per socket * Threads per core") + ":", this);
     m_maxHotCPULabel->setWordWrap(false);
 
     m_maxHotCPUSpinBox = new QSpinBox(this);
