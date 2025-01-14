@@ -29,6 +29,7 @@
 #include <QUuid>
 #include <QMessageBox>
 #include <QSettings>
+#include <QElapsedTimer>
 #include <QDebug>
 
 // Local
