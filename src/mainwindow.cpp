@@ -141,10 +141,6 @@ void MainWindow::createMenus()
     m_fileMenu->addAction(m_importMachineAction);
     m_fileMenu->addSeparator();
     m_fileMenu->addAction(m_preferencesAppAction);
-#ifndef Q_OS_WIN
-    m_fileMenu->addSeparator();
-    m_fileMenu->addAction(m_checkUpdateAppAction);
-#endif
     m_fileMenu->addSeparator();
     m_fileMenu->addAction(m_exitAppAction);
 
@@ -192,14 +188,6 @@ void MainWindow::createMenusActions()
                                          this);
     connect(m_preferencesAppAction, &QAction::triggered,
             m_configWindow, &QWidget::show);
-#ifndef Q_OS_WIN
-    m_checkUpdateAppAction = new QAction(QIcon::fromTheme("update-none",
-                                                          QIcon(QPixmap(":/images/icons/breeze/32x32/update-none.svg"))),
-                                         tr("Check for updates"),
-                                         this);
-    connect(m_checkUpdateAppAction, &QAction::triggered,
-            this, &MainWindow::checkVersions);
-#endif
     m_exitAppAction = new QAction(QIcon::fromTheme("application-exit",
                                                    QIcon(QPixmap(":/images/icons/breeze/32x32/application-exit.svg"))),
                                   tr("Exit"),
@@ -349,44 +337,6 @@ void MainWindow::visitQtEmuBugTracker()
 void MainWindow::visitQemuWebsite()
 {
     QDesktopServices::openUrl(QUrl("https://www.qemu.org/"));
-}
-
-/**
- * @brief Check QEMU and QtEmu version
- *
- * Check QEMU and QtEmu version
- */
-void MainWindow::checkVersions()
-{
-    QNetworkRequest request(QUrl("https://www.carlavilla.es/docs/qtemu.json"));
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-
-    QNetworkAccessManager networkAccessManager;
-    QNetworkReply *reply = networkAccessManager.get(request);
-
-    while(!reply->isFinished()) {
-        qApp->processEvents();
-    }
-
-    if (reply->error()) {        
-        SystemUtils::showMessage(tr("QtEmu - Network problem"),
-                                 tr("<p>There's a network problem</p>"),
-                                 QMessageBox::Critical);
-        return;
-    }
-
-    QByteArray response = reply->readAll();
-    QJsonDocument qemuQtEmuVersion = QJsonDocument::fromJson(response);
-    QString qemuVersion = qemuQtEmuVersion["qemu"].toString();
-    QString qtemuVersion = qemuQtEmuVersion["qtemu"].toString();
-    QString installedQtEmuVersion = QCoreApplication::applicationVersion();
-
-    reply->deleteLater();
-
-    SystemUtils::showMessage(tr("QtEmu - versions"),
-                             tr("<p><strong>QtEmu installed version: </strong>") + installedQtEmuVersion + "</p>" +
-                             tr("<p><strong>Last QtEmu version: </strong>") + qtemuVersion + "</p>",
-                             QMessageBox::Critical);
 }
 
 /**

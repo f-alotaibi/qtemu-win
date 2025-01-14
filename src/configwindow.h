@@ -70,10 +70,6 @@ class ConfigWindow : public QWidget {
 
     private slots:
         void closeEvent (QCloseEvent *event);
-        void toggleUpdate(bool updateState);
-        void pushStableVersion(bool release);
-        void pushBetaVersion(bool release);
-        void pushDevelopmentVersion(bool release);
         void setLanguageLabel(QString language);
         void setAuthorsLabel(int languagePosition);
         void toggleServerPort(int proxyOption);
@@ -128,21 +124,6 @@ class ConfigWindow : public QWidget {
         QComboBox *m_monitorHostnameComboBox;
 
         QSpinBox *m_monitorSocketSpinBox;
-
-        // Update QtEmu page
-        QFormLayout *m_updatePageLayout;
-        QVBoxLayout *m_updateRadiosLayout;
-        QWidget *m_updatePageWidget;
-
-        QCheckBox *m_updateCheckBox;
-
-        QGroupBox *m_updatesGroup;
-
-        QRadioButton *m_stableReleaseRadio;
-        QRadioButton *m_betaReleaseRadio;
-        QRadioButton *m_developmentRelaseRadio;
-
-        QString m_releaseString;
 
         // Language
         QVBoxLayout *m_languagePageLayout;
@@ -203,7 +184,6 @@ class ConfigWindow : public QWidget {
 
         // Methods
         void createGeneralPage();
-        void createUpdatePage();
         void createLanguagePage();
         void createStartPage();
         void createProxyPage();

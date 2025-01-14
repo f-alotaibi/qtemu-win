@@ -73,7 +73,6 @@ class MainWindow : public QMainWindow {
         void visitQtEmuWebsite();
         void visitQtEmuBugTracker();
         void visitQemuWebsite();
-        void checkVersions();
         void quitApp();
         void createNewMachine();
         void machineOptions();
@@ -98,7 +97,6 @@ class MainWindow : public QMainWindow {
         QMenu *m_helpMenu;
 
         QAction *m_exitAppAction;
-        QAction *m_checkUpdateAppAction;
         QAction *m_preferencesAppAction;
 
         QAction *m_newMachineAction;

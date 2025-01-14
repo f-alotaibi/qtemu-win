@@ -41,7 +41,6 @@ ConfigWindow::ConfigWindow(QEMU *QEMUGlobalObject, QWidget *parent) : QWidget(pa
     this->m_QEMUObject = QEMUGlobalObject;
 
     this->createGeneralPage();
-    this->createUpdatePage();
     this->createLanguagePage();
     //this->createStartPage(); QtEmu 2.x
     this->createProxyPage();
@@ -60,12 +59,8 @@ ConfigWindow::ConfigWindow(QEMU *QEMUGlobalObject, QWidget *parent) : QWidget(pa
     m_optionsListWidget->item(0)->setIcon(QIcon::fromTheme("preferences-other",
                                                            QIcon(QPixmap(":/images/icons/breeze/32x32/preferences-other.svg"))));
 
-    m_optionsListWidget->addItem(tr("Update QtEmu"));
-    m_optionsListWidget->item(1)->setIcon(QIcon::fromTheme("update-none",
-                                                           QIcon(QPixmap(":/images/icons/breeze/32x32/update-none.svg"))));
-
     m_optionsListWidget->addItem(tr("Language"));
-    m_optionsListWidget->item(2)->setIcon(QIcon::fromTheme("applications-education-language",
+    m_optionsListWidget->item(1)->setIcon(QIcon::fromTheme("applications-education-language",
                                                            QIcon(QPixmap(":/images/icons/breeze/32x32/applications-education-language.svg"))));
 
     // QtEmu 2.x
@@ -74,11 +69,11 @@ ConfigWindow::ConfigWindow(QEMU *QEMUGlobalObject, QWidget *parent) : QWidget(pa
     //                                                       QIcon(QPixmap(":/images/icons/breeze/32x32/practice-start.svg"))));
 
     m_optionsListWidget->addItem(tr("Proxy"));
-    m_optionsListWidget->item(3)->setIcon(QIcon::fromTheme("network-manager",
+    m_optionsListWidget->item(2)->setIcon(QIcon::fromTheme("network-manager",
                                                            QIcon(QPixmap(":/images/icons/breeze/32x32/network-manager.svg"))));
 
     m_optionsListWidget->addItem(tr("QEMU"));
-    m_optionsListWidget->item(4)->setIcon(QIcon(QPixmap(":/images/QEMU.png")));
+    m_optionsListWidget->item(3)->setIcon(QIcon(QPixmap(":/images/QEMU.png")));
 
     // Prepare window
     m_categoriesStackedWidget = new QStackedWidget(this);
@@ -86,7 +81,6 @@ ConfigWindow::ConfigWindow(QEMU *QEMUGlobalObject, QWidget *parent) : QWidget(pa
                                              QSizePolicy::MinimumExpanding);
 
     m_categoriesStackedWidget->addWidget(this->m_generalPageWidget);
-    m_categoriesStackedWidget->addWidget(this->m_updatePageWidget);
     m_categoriesStackedWidget->addWidget(this->m_languagePageWidget);
     //m_categoriesStackedWidget->addWidget(this->m_startPageWidget); QtEmu 2.x
     m_categoriesStackedWidget->addWidget(this->m_proxyPageWidget);
@@ -230,48 +224,6 @@ void ConfigWindow::createGeneralPage()
 
     m_generalPageWidget = new QWidget(this);
     m_generalPageWidget->setLayout(m_generalPageLayout);
-}
-
-/**
- * @brief Create the update page of the QtEmu configuration
- *
- * Create the update page of the QtEmu configuration where
- * the version of the software can be selected.
- * Versions: Stable, Beta, Development
- */
-void ConfigWindow::createUpdatePage()
-{
-    m_updateCheckBox = new QCheckBox(this);
-    m_updateCheckBox->setChecked(true);
-
-    connect(m_updateCheckBox, &QAbstractButton::toggled,
-                this, &ConfigWindow::toggleUpdate);
-
-    m_updatesGroup = new QGroupBox(this);
-
-    m_stableReleaseRadio = new QRadioButton(tr("Stable version"), this);
-    m_betaReleaseRadio = new QRadioButton(tr("Beta version"), this);
-    m_developmentRelaseRadio = new QRadioButton(tr("Development version"), this);
-
-    m_stableReleaseRadio->setChecked(true);
-
-    connect(m_stableReleaseRadio, &QAbstractButton::toggled,
-                this, &ConfigWindow::pushStableVersion);
-
-    m_updateRadiosLayout = new QVBoxLayout();
-    m_updateRadiosLayout->setAlignment(Qt::AlignVCenter);
-    m_updateRadiosLayout->addWidget(m_stableReleaseRadio);
-    m_updateRadiosLayout->addWidget(m_betaReleaseRadio);
-    m_updateRadiosLayout->addWidget(m_developmentRelaseRadio);
-
-    m_updatesGroup->setLayout(m_updateRadiosLayout);
-
-    m_updatePageLayout = new QFormLayout();
-    m_updatePageLayout->addRow(tr("Check for updates"), m_updateCheckBox);
-    m_updatePageLayout->addRow(m_updatesGroup);
-
-    m_updatePageWidget = new QWidget(this);
-    m_updatePageWidget->setLayout(m_updatePageLayout);
 }
 
 /**
@@ -477,59 +429,6 @@ void ConfigWindow::insertBinariesInTree()
 }
 
 /**
- * @brief Enable or disabled the update radios
- * @param updateState
- *
- * Indicate if the radios referred to the update section are enabled or disabled
- */
-void ConfigWindow::toggleUpdate(bool updateState)
-{
-    this->m_updatesGroup->setEnabled(updateState);
-    this->m_stableReleaseRadio->setEnabled(updateState);
-    this->m_betaReleaseRadio->setEnabled(updateState);
-    this->m_developmentRelaseRadio->setEnabled(updateState);
-}
-
-/**
- * @brief Select stable version
- * @param release
- *
- * Select stable version for the QtEmu release chanel
- */
-void ConfigWindow::pushStableVersion(bool release)
-{
-    if (release) {
-        this->m_releaseString = "stable";
-    }
-}
-
-/**
- * @brief Select beta version
- * @param release
- *
- * Select beta version for the QtEmu release chanel
- */
-void ConfigWindow::pushBetaVersion(bool release)
-{
-    if (release) {
-        this->m_releaseString = "beta";
-    }
-}
-
-/**
- * @brief Select development version
- * @param release
- *
- * Select development version for the QtEmu release chanel
- */
-void ConfigWindow::pushDevelopmentVersion(bool release)
-{
-    if (release) {
-        this->m_releaseString = "alpha";
-    }
-}
-
-/**
  * @brief Set the language label
  * @param language, language string
  *
@@ -668,10 +567,6 @@ void ConfigWindow::saveSettings()
     settings.setValue("qemuMonitorPort", this->m_monitorSocketSpinBox->value());
 #endif
 
-    // Update
-    settings.setValue("update", this->m_updateCheckBox->isChecked());
-    settings.setValue("release", this->m_releaseString);
-
     // Language
     settings.setValue("language", this->m_languageISOCode);
     settings.setValue("languagePos", this->m_languagePos);
@@ -718,18 +613,6 @@ void ConfigWindow::loadSettings()
     this->m_monitorHostnameComboBox->setCurrentText(settings.value("qemuMonitorHost", "localhost").toString());
     this->m_monitorSocketSpinBox->setValue(settings.value("qemuMonitorPort", 6000).toInt());
 #endif
-    // Update
-    this->m_updateCheckBox->setChecked(settings.value("update", true).toBool());
-    this->m_releaseString = settings.value("release", "stable").toString();
-
-    if (this->m_releaseString == "alpha") {
-        this->m_stableReleaseRadio->setChecked(true);
-    } else if (this->m_releaseString == "beta") {
-        this->m_betaReleaseRadio->setChecked(true);
-    } else {
-        this->m_stableReleaseRadio->setChecked(true);
-    }
-
     // Language
     this->m_languagesListView->setCurrentRow(settings.value("languagePos", 0).toInt());
 
