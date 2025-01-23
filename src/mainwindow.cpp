@@ -350,13 +350,13 @@ void MainWindow::quitApp()
         this->show();
     }
 
-    int confirmation = QMessageBox::question(this,
+    QMessageBox::StandardButton confirmation = QMessageBox::question(this,
                           tr("Quit?"),
                           tr("Do you really want to close QtEmu?\nIf there are machines running there are going to close"),
-                          tr("&Yes, close the program"), tr("&No"),
-                          QString(), 1, 1);
+                          QMessageBox::StandardButtons(QMessageBox::StandardButton::Yes | QMessageBox::StandardButton::No),
+                          QMessageBox::StandardButton::No);
 
-    if (confirmation == 0) {
+    if (confirmation == QMessageBox::StandardButton::Yes) {
         qApp->setQuitOnLastWindowClosed(true);
         qApp->closeAllWindows();
         qApp->quit();
