@@ -34,7 +34,7 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Qt configuration
-find_package(Qt5 REQUIRED COMPONENTS Core Gui Widgets Network)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Network)
 
 include(GNUInstallDirs)
 
@@ -143,10 +143,10 @@ add_executable(qtemu
 )
 
 target_link_libraries(qtemu
-    Qt5::Core
-    Qt5::Gui
-    Qt5::Network
-    Qt5::Widgets
+    Qt6::Core
+    Qt6::Gui
+    Qt6::Network
+    Qt6::Widgets
 )
 
 set(OTHER_FILES
