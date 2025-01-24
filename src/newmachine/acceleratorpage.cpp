@@ -45,8 +45,8 @@ MachineAcceleratorPage::MachineAcceleratorPage(Machine *machine,
     m_acceleratorTabWidget->addTab(new XENTab(machine, this), tr("XEN"));
 #endif
 #ifdef Q_OS_WIN
-    m_acceleratorTabWidget->addTab(new HAXMTab(machine, this), tr("HAXM"));
     m_acceleratorTabWidget->addTab(new WHPXTab(machine, this), tr("WHPX"));
+    m_acceleratorTabWidget->addTab(new HAXMTab(machine, this), tr("HAXM"));
 #endif
 #ifdef Q_OS_MACOS
     m_acceleratorTabWidget->addTab(new HVFTab(machine, this), tr("HVF"));
@@ -250,7 +250,6 @@ HAXMTab::HAXMTab(Machine *machine, QWidget *parent) : QWidget(parent)
     #endif
 
     m_haxmCheck = new QCheckBox("Hardware Accelerated Execution Manager (HAXM)", this);
-    m_haxmCheck->setChecked(true);
 
     connect(m_haxmCheck, &QAbstractButton::toggled,
                 this, &HAXMTab::addHAXAccelerator);
@@ -263,9 +262,14 @@ HAXMTab::HAXMTab(Machine *machine, QWidget *parent) : QWidget(parent)
 
     m_haxmURLLabel = new QLabel("<a href=\"https://software.intel.com/en-us/articles/intel-hardware-accelerated-execution-manager-intel-haxm\">software.intel.com</a>", this);
 
+    m_haxmDiscontinued = new QLabel("The HAXM project has been discontinued, QEMU versions after 8.2 have removed the HAXM accelerator.");
+    m_haxmDiscontinued->setStyleSheet("QLabel { color: red; }");
+    m_haxmDiscontinued->setWordWrap(true);
+
     m_haxmLayout = new QVBoxLayout();
     m_haxmLayout->addWidget(m_haxmCheck);
     m_haxmLayout->addWidget(m_haxmDescriptionLabel);
+    m_haxmLayout->addWidget(m_haxmDiscontinued);
     m_haxmLayout->addWidget(m_haxmURLLabel, 0, Qt::AlignCenter);
 
     this->setLayout(m_haxmLayout);
@@ -362,6 +366,7 @@ WHPXTab::WHPXTab(Machine *machine, QWidget *parent) : QWidget(parent)
     this->m_newMachine = machine;
 
     m_whpxCheck = new QCheckBox("Windows Hypervisor Platform (WHPX)", this);
+    m_whpxCheck->setChecked(true);
 
     connect(m_whpxCheck, &QAbstractButton::toggled,
                 this, &WHPXTab::addWHPXAccelerator);
@@ -372,11 +377,16 @@ WHPXTab::WHPXTab(Machine *machine, QWidget *parent) : QWidget(parent)
                                         "for the partition, and create and control execution of virtual processors.", this);
     m_whpxDescriptionLabel->setWordWrap(true);
 
+    m_whpxNoHyperV = new QLabel("Make sure that Hyper-V and Virtual Machine Platform are enabled in your windows installation.");
+    m_whpxNoHyperV->setStyleSheet("QLabel { color: red; }");
+    m_whpxNoHyperV->setWordWrap(true);
+
     m_whpxURLLabel = new QLabel("<a href=\"https://docs.microsoft.com/en-us/virtualization/api/\">docs.microsoft.com</a>", this);
 
     m_whpxLayout = new QVBoxLayout();
     m_whpxLayout->addWidget(m_whpxCheck);
     m_whpxLayout->addWidget(m_whpxDescriptionLabel);
+    m_whpxLayout->addWidget(m_whpxNoHyperV);
     m_whpxLayout->addWidget(m_whpxURLLabel, 0, Qt::AlignCenter);
 
     this->setLayout(m_whpxLayout);

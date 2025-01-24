@@ -149,6 +149,7 @@ class HAXMTab: public QWidget {
         QCheckBox *m_haxmCheck;
 
         QLabel *m_haxmDescriptionLabel;
+        QLabel *m_haxmDiscontinued;
         QLabel *m_haxmURLLabel;
 
         Machine *m_newMachine;
@@ -200,6 +201,7 @@ class WHPXTab: public QWidget {
         QCheckBox *m_whpxCheck;
 
         QLabel *m_whpxDescriptionLabel;
+        QLabel *m_whpxNoHyperV;
         QLabel *m_whpxURLLabel;
 
         Machine *m_newMachine;
