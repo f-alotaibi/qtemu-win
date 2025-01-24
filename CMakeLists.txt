@@ -36,7 +36,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Qt configuration
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Network)
 
-include(GNUInstallDirs)
+if (UNIX)
+    include(GNUInstallDirs)
+endif()
 
 # CMake configuration
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -152,10 +154,16 @@ target_link_libraries(qtemu
 set(OTHER_FILES
     CHANGELOG
     LICENSE
-    qtemu.desktop
     README
     translations
 )
+
+if(UNIX)
+    set(OTHER_FILES
+    ${OTHER_FILES}
+    qtemu.desktop
+)
+endif()
 
 if(NOT source_date_epoch_ISEMPTY)
     target_compile_definitions(qtemu PRIVATE
