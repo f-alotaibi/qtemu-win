@@ -65,8 +65,6 @@ MachineConfigAccel::MachineConfigAccel(Machine *machine,
     }
 
     m_acceleratorTree = new QTreeWidget(this);
-    m_acceleratorTree->setMaximumHeight(150);
-    m_acceleratorTree->setMaximumWidth(200);
     m_acceleratorTree->setColumnCount(1);
     m_acceleratorTree->setHeaderHidden(true);
     m_acceleratorTree->setRootIsDecorated(false);
