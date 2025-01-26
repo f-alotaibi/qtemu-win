@@ -53,7 +53,7 @@ ExportDetailsPage::ExportDetailsPage(Machine *machine,
     m_RAMLabel->setText(machine->getAudioLabel());
     m_acceleratorLabel = new QLabel(this);
     m_acceleratorLabel->setWordWrap(true);
-    m_acceleratorLabel->setText(machine->getAcceleratorLabel());
+    m_acceleratorLabel->setText(machine->getAccelerator());
 
     m_mainLayout = new QGridLayout();
     m_mainLayout->addWidget(m_machineDescLabel,     0, 0, 1, 1);

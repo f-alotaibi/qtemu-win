@@ -128,7 +128,7 @@ void MachineUtils::fillMachineObject(Machine *machine,
     machine->setThreadsCore(cpuObject["threadsCore"].toInt());
     machine->setHostSoundSystem(machineJSON["hostSoundSystem"].toString());
     machine->setAudio(MachineUtils::getSoundCards(machineJSON["audio"].toArray()));
-    machine->setAccelerator(MachineUtils::getAccelerators(machineJSON["accelerator"].toArray()));
+    machine->setAccelerator(machineJSON["accelerator"].toString());
     machine->setBoot(machineBoot);
 }
 
@@ -215,23 +215,6 @@ QStringList MachineUtils::getSoundCards(QJsonArray soundCardsArray)
     }
 
     return soundCardsList;
-}
-
-/**
- * @brief Get the accelerators
- * @param acceleratorsArray, json array with the accelerators of the machine
- * @return list with the accelerators
- *
- * Get the accelerators
- */
-QStringList MachineUtils::getAccelerators(QJsonArray acceleratorsArray)
-{
-    QStringList acceleratorsList;
-    for(int i = 0; i < acceleratorsArray.size(); ++i) {
-        acceleratorsList.append(acceleratorsArray[i].toString());
-    }
-
-    return acceleratorsList;
 }
 
 /**

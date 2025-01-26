@@ -101,5 +101,5 @@ void ImportDetailsPage::initializePage()
     m_graphicsLabel->setText(this->m_machine->getGPUType());
     m_audioLabel->setText(QString::number(this->m_machine->getRAM()).append(" MiB"));
     m_RAMLabel->setText(this->m_machine->getAudioLabel());
-    m_acceleratorLabel->setText(this->m_machine->getAcceleratorLabel());
+    m_acceleratorLabel->setText(this->m_machine->getAccelerator());
 }

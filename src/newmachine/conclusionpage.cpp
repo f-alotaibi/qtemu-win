@@ -110,7 +110,7 @@ void MachineConclusionPage::initializePage()
     this->m_graphicsLabel->setText(this->m_newMachine->getGPUType());
     this->m_RAMLabel->setText(QString::number(this->m_newMachine->getRAM()).append(" MiB"));
     this->m_audioLabel->setText(this->m_newMachine->getAudioLabel());
-    this->m_acceleratorLabel->setText(this->m_newMachine->getAcceleratorLabel());
+    this->m_acceleratorLabel->setText(this->m_newMachine->getAccelerator());
 
     if (createNewDisk && !diskName.isEmpty()) {
         this->m_diskLabel->setText(diskName.toLower()+"."+diskFormat);

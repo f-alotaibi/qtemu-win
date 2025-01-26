@@ -116,8 +116,8 @@ class Machine: public QObject {
         QList<Media *> getMedia() const;
         void addMedia(Media *media);
 
-        QStringList getAccelerator() const;
-        void setAccelerator(const QStringList &value);
+        QString getAccelerator() const;
+        void setAccelerator(const QString &value);
 
         Boot *getBoot() const;
         void setBoot(Boot *value);
@@ -127,14 +127,9 @@ class Machine: public QObject {
         void removeAudio(const QString audio);
         void removeAllAudioCards();
 
-        void addAccelerator(const QString accel);
-        void removeAccelerator(const QString accel);
-        void removeAllAccelerators();
-
         void removeAllMedia();
 
         QString getAudioLabel();
-        QString getAcceleratorLabel();
 
         void runMachine(QEMU *QEMUGlobalObject);
         void stopMachine();
@@ -194,7 +189,7 @@ class Machine: public QObject {
         QList<Media *> media;
 
         // Accelerator
-        QStringList accelerator;
+        QString accelerator;
 
         // Boot
         Boot *boot;

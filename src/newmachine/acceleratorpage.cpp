@@ -115,9 +115,9 @@ KVMTab::~KVMTab()
 void KVMTab::addKVMAccelerator(bool kvmAccelerator)
 {
     if (kvmAccelerator) {
-        this->m_newMachine->addAccelerator("kvm");
+        this->m_newMachine->setAccelerator("kvm");
     } else {
-        this->m_newMachine->removeAccelerator("kvm");
+        this->m_newMachine->setAccelerator("");
     }
 }
 
@@ -169,9 +169,9 @@ XENTab::~XENTab()
 void XENTab::addXENAccelerator(bool xenAccelerator)
 {
     if (xenAccelerator) {
-        this->m_newMachine->addAccelerator("xen");
+        this->m_newMachine->setAccelerator("xen");
     } else {
-        this->m_newMachine->removeAccelerator("xen");
+        this->m_newMachine->setAccelerator("");
     }
 }
 
@@ -229,9 +229,9 @@ TCGTab::~TCGTab()
 void TCGTab::addTCGAccelerator(bool tcgAccelerator)
 {
     if (tcgAccelerator) {
-        this->m_newMachine->addAccelerator("tcg");
+        this->m_newMachine->setAccelerator("tcg");
     } else {
-        this->m_newMachine->removeAccelerator("tcg");
+        this->m_newMachine->setAccelerator("");
     }
 }
 
@@ -291,9 +291,9 @@ HAXMTab::~HAXMTab()
 void HAXMTab::addHAXAccelerator(bool haxAccelerator)
 {
     if (haxAccelerator) {
-        this->m_newMachine->addAccelerator("hax");
+        this->m_newMachine->setAccelerator("hax");
     } else {
-        this->m_newMachine->removeAccelerator("hax");
+        this->m_newMachine->setAccelerator("");
     }
 }
 
@@ -348,9 +348,9 @@ HVFTab::~HVFTab()
 void HVFTab::addHVFAccelerator(bool hvfAccelerator)
 {
     if (hvfAccelerator) {
-        this->m_newMachine->addAccelerator("hvf");
+        this->m_newMachine->setAccelerator("hvf");
     } else {
-        this->m_newMachine->removeAccelerator("hvf");
+        this->m_newMachine->setAccelerator("");
     }
 }
 
@@ -408,8 +408,8 @@ WHPXTab::~WHPXTab()
 void WHPXTab::addWHPXAccelerator(bool hvfAccelerator)
 {
     if (hvfAccelerator) {
-        this->m_newMachine->addAccelerator("whpx");
+        this->m_newMachine->setAccelerator("whpx");
     } else {
-        this->m_newMachine->removeAccelerator("whpx");
+        this->m_newMachine->setAccelerator("");
     }
 }

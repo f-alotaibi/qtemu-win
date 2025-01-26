@@ -244,9 +244,13 @@ QHash<QString, QString> SystemUtils::getSoundCards()
  *
  * Get all the accelerators
  */
-QHash<QString, QString> SystemUtils::getAccelerators()
+QMap<QString, QString> SystemUtils::getAccelerators()
 {
-    QHash<QString, QString> acceleratorsHash;
+    QMap<QString, QString> acceleratorsHash;
+#ifdef Q_OS_WIN
+    acceleratorsHash.insert("whpx", "Windows Hypervisor Platform (WHPX)");
+    acceleratorsHash.insert("hax", "Hardware Accelerated Execution Manager (HAXM)");
+#endif
 #ifdef Q_OS_LINUX
     acceleratorsHash.insert("kvm", "Kernel-based Virtual Machine (KVM)");
     acceleratorsHash.insert("xen", "Xen Hypervisor");
@@ -255,10 +259,6 @@ QHash<QString, QString> SystemUtils::getAccelerators()
     acceleratorsHash.insert("hvf", "Hypervisor Framework (HVF)");
 #endif
     acceleratorsHash.insert("tcg", "Tiny Code Generator (TCG)");
-#ifdef Q_OS_WIN
-    acceleratorsHash.insert("hax", "Hardware Accelerated Execution Manager (HAXM)");
-    acceleratorsHash.insert("whpx", "Windows Hypervisor Platform (WHPX)");
-#endif
 
     return acceleratorsHash;
 }

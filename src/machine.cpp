@@ -515,7 +515,7 @@ void Machine::addMedia(Media *media)
  * Get the accelerator machine
  * Ex: kvm, xen...
  */
-QStringList Machine::getAccelerator() const
+QString Machine::getAccelerator() const
 {
     return accelerator;
 }
@@ -526,7 +526,7 @@ QStringList Machine::getAccelerator() const
  * Set the accelerator machine
  * Ex: kvm, xen...
  */
-void Machine::setAccelerator(const QStringList &value)
+void Machine::setAccelerator(const QString &value)
 {
     accelerator = value;
 }
@@ -613,42 +613,6 @@ void Machine::removeAllAudioCards()
 }
 
 /**
- * @brief Add an accelerator to the list
- * @param accel code of the accelerator
- *
- * Add an accelerator to the list
- */
-void Machine::addAccelerator(const QString accel)
-{
-    if (!this->accelerator.contains(accel)) {
-        this->accelerator.append(accel);
-    }
-}
-
-/**
- * @brief Remove an accelerator from the list
- * @param accel code of the accelerator
- *
- * Remove an accelerator from the list if exists
- */
-void Machine::removeAccelerator(const QString accel)
-{
-    if(this->accelerator.contains(accel)){
-        this->accelerator.removeOne(accel);
-    }
-}
-
-/**
- * @brief Remove all accelerators
- *
- * Remove all accelerators of the machine
- */
-void Machine::removeAllAccelerators()
-{
-    this->accelerator.clear();
-}
-
-/**
  * @brief Remove all media
  *
  * Remove all media
@@ -675,25 +639,6 @@ QString Machine::getAudioLabel()
     QString audioLabel = audioCards.join(",");
 
     return audioLabel;
-}
-
-/**
- * @brief Get all the accelerators separated by commas
- * @return Accelerators separated by commas
- *
- * Get all the accelerators separated by commas
- * Ex: kvm,tcg
- */
-QString Machine::getAcceleratorLabel()
-{
-    QHash<QString, QString> acceleratorsHash = SystemUtils::getAccelerators();
-    QStringList accel = this->accelerator;
-    for(int i = 0; i < accel.size(); ++i) {
-        accel.replace(i, acceleratorsHash.value(accel.at(i)));
-    }
-    QString acceleratorLabel = accel.join(",");
-
-    return acceleratorLabel;
 }
 
 /**
@@ -952,20 +897,8 @@ QStringList Machine::generateMachineCommand()
     qemuCommand << "-uuid";
     qemuCommand << uuid.remove("{").remove("}");
 
-    QString accelerators;
-    bool firstAccel = true;
-    QStringListIterator accelIterator(this->accelerator);
-    while (accelIterator.hasNext()) {
-        if(firstAccel) {
-            firstAccel = false;
-        } else {
-            accelerators.append(", ");
-        }
-        accelerators.append(accelIterator.next());
-    }
-
     qemuCommand << "-accel";
-    qemuCommand << accelerators;
+    qemuCommand << this->accelerator;
 
     QStringListIterator audioIterator(this->audio);
     while (audioIterator.hasNext()) {
@@ -1154,7 +1087,7 @@ bool Machine::saveMachine()
 
     machineJSONObject["boot"] = boot;
 
-    machineJSONObject["accelerator"] = QJsonArray::fromStringList(this->accelerator);
+    machineJSONObject["accelerator"] = this->accelerator;
     machineJSONObject["audio"] = QJsonArray::fromStringList(this->audio);
 
     if (!this->hostSoundSystem.isEmpty()) {

@@ -23,10 +23,9 @@
 
 // Qt
 #include <QWidget>
-#include <QHBoxLayout>
 #include <QVBoxLayout>
-#include <QToolButton>
-#include <QTreeWidget>
+#include <QButtonGroup>
+#include <QRadioButton>
 
 // Local
 #include "../machine.h"
@@ -53,21 +52,13 @@ class MachineConfigAccel : public QWidget {
     protected:
 
     private:
-        QHBoxLayout *m_accelTreeLayout;
         QVBoxLayout *m_acceleratorLayout;
 
-        QToolButton *m_moveUpAccelToolButton;
-        QToolButton *m_moveDownAccelToolButton;
+        QButtonGroup *m_acceleratorButtonGroup;
 
-        QTreeWidget *m_acceleratorTree;
-
-        QTreeWidgetItem *m_treeItem;
+        QRadioButton *m_acceleratorRadioButton;
 
         Machine *m_machine;
-
-        // Methods
-        void moveUpButton();
-        void moveDownButton();
 };
 
 #endif // MACHINECONFIGACCEL_H

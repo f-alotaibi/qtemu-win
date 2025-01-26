@@ -53,7 +53,6 @@ class MachineUtils : public QObject {
         static bool deleteMachine(const QUuid machineUuid);
 
         static QStringList getSoundCards(QJsonArray soundCardsArray);
-        static QStringList getAccelerators(QJsonArray acceleratorsArray);
         static QStringList getMediaDevices(QJsonArray mediaDevicesArray);
 
     public slots:

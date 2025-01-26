@@ -702,7 +702,7 @@ void MainWindow::fillMachineDetailsSection(Machine *machine)
     this->m_machineRAMLabel->setText(QString::number(machine->getRAM()) + " MiB");
     this->m_machineGraphicsLabel->setText(machine->getGPUType());
     this->m_machineAudioLabel->setText(machine->getAudioLabel());
-    this->m_machineAccelLabel->setText(machine->getAcceleratorLabel());
+    this->m_machineAccelLabel->setText(machine->getAccelerator());
     this->m_machineNetworkLabel->setText(machine->getUseNetwork() == true ? tr("Yes") : tr("no"));
     QString mediaLabel;
     for (int i = 0; i < machine->getMedia().size(); ++i) {
