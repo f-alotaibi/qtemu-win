@@ -113,6 +113,8 @@ class MainWindow : public QMainWindow {
         QAction *m_helpQemuWebsiteAction;
         QAction *m_helpAboutAction;
 
+        QAction *m_newMachineToolbarAction;
+        QAction *m_settingsMachineToolbarAction;
         QAction *m_startMachineAction;
         QAction *m_stopMachineAction;
         QAction *m_resetMachineAction;

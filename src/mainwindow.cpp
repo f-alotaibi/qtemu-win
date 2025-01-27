@@ -262,6 +262,20 @@ void MainWindow::createMenusActions()
             m_aboutwidget, &QWidget::show);
 
     // Actions for Machine toolbar
+    m_newMachineToolbarAction = new QAction(this);
+    m_newMachineToolbarAction->setIcon(QIcon::fromTheme("project-development-new-template",
+                                                   QIcon(QPixmap(":/images/icons/breeze/32x32/project-development-new-template.svg"))));
+    m_newMachineToolbarAction->setToolTip(tr("New Machine"));
+    connect(m_newMachineToolbarAction, &QAction::triggered,
+            this, &MainWindow::createNewMachine);
+
+    m_settingsMachineToolbarAction = new QAction(this);
+    m_settingsMachineToolbarAction->setIcon(QIcon::fromTheme("configure",
+                                                   QIcon(QPixmap(":/images/icons/breeze/32x32/settings-configure.svg"))));
+    m_settingsMachineToolbarAction->setToolTip(tr("Machine Settings"));
+    connect(m_settingsMachineToolbarAction, &QAction::triggered,
+            this, &MainWindow::machineOptions);
+
     m_startMachineAction = new QAction(this);
     m_startMachineAction->setIcon(QIcon::fromTheme("media-playback-start",
                                                    QIcon(QPixmap(":/images/icons/breeze/32x32/start.svg"))));
@@ -300,8 +314,8 @@ void MainWindow::createToolBars()
 
     m_mainToolBar->setToolButtonStyle(Qt::ToolButtonFollowStyle);
     m_mainToolBar->setMovable(false);
-    m_mainToolBar->addAction(this->m_newMachineAction);
-    m_mainToolBar->addAction(this->m_settingsMachineAction);
+    m_mainToolBar->addAction(this->m_newMachineToolbarAction);
+    m_mainToolBar->addAction(this->m_settingsMachineToolbarAction);
     m_mainToolBar->addSeparator();
     m_mainToolBar->addAction(this->m_startMachineAction);
     m_mainToolBar->addAction(this->m_stopMachineAction);
