@@ -57,6 +57,10 @@ MachineConfigBoot::MachineConfigBoot(Machine *machine,
     connect(m_moveDownToolButton, &QAbstractButton::clicked,
             this, &MachineConfigBoot::moveDownButton);
 
+    QVBoxLayout *buttonLayout = new QVBoxLayout();
+    buttonLayout->addWidget(m_moveUpToolButton);
+    buttonLayout->addWidget(m_moveDownToolButton);
+
     QStringList bootList = this->m_machine->getBoot()->bootOrder();
     QMap<QString, QString> mediaDevicesMap = SystemUtils::getMediaDevices();
     QMapIterator<QString, QString> i(mediaDevicesMap);
@@ -68,13 +72,10 @@ MachineConfigBoot::MachineConfigBoot(Machine *machine,
     }
 
     m_bootTree = new QTreeWidget(this);
-    m_bootTree->setMaximumHeight(120);
-    m_bootTree->setMaximumWidth(150);
     m_bootTree->setColumnCount(1);
     m_bootTree->setHeaderHidden(true);
     m_bootTree->setRootIsDecorated(false);
     m_bootTree->setEnabled(enableFields);
-    m_bootTree->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
 
     for (int i = 0; i < bootList.size(); ++i) {
         m_treeItem = new QTreeWidgetItem(this->m_bootTree, QTreeWidgetItem::Type);
@@ -128,8 +129,7 @@ MachineConfigBoot::MachineConfigBoot(Machine *machine,
     m_bootTreeLayout->setAlignment(Qt::AlignTop);
     m_bootTreeLayout->setSpacing(5);
     m_bootTreeLayout->addWidget(m_bootTree);
-    m_bootTreeLayout->addWidget(m_moveUpToolButton);
-    m_bootTreeLayout->addWidget(m_moveDownToolButton);
+    m_bootTreeLayout->addItem(buttonLayout);
 
     m_kernelLayout = new QGridLayout();
     m_kernelLayout->setSpacing(5);
@@ -144,8 +144,8 @@ MachineConfigBoot::MachineConfigBoot(Machine *machine,
 
     m_bootPageLayout = new QVBoxLayout();
     m_bootPageLayout->setAlignment(Qt::AlignTop);
-    m_bootPageLayout->addWidget(m_bootMenuCheckBox);
     m_bootPageLayout->addItem(m_bootTreeLayout);
+    m_bootPageLayout->addWidget(m_bootMenuCheckBox);
     m_bootPageLayout->addWidget(m_kernelBootCheckBox);
     m_bootPageLayout->addItem(m_kernelLayout);
 

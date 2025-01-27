@@ -53,6 +53,10 @@ MachineConfigAudio::MachineConfigAudio(Machine *machine,
     connect(m_moveDownAudioToolButton, &QAbstractButton::clicked,
             this, &MachineConfigAudio::moveDownButton);
 
+    QVBoxLayout *buttonLayout = new QVBoxLayout();
+    buttonLayout->addWidget(m_moveUpAudioToolButton);
+    buttonLayout->addWidget(m_moveDownAudioToolButton);
+
     QStringList audioList = machine->getAudio();
 
     QHash<QString, QString> audioHash = SystemUtils::getSoundCards();
@@ -65,12 +69,9 @@ MachineConfigAudio::MachineConfigAudio(Machine *machine,
     }
 
     m_audioTree = new QTreeWidget(this);
-    m_audioTree->setMaximumHeight(200);
-    m_audioTree->setMaximumWidth(250);
     m_audioTree->setColumnCount(1);
     m_audioTree->setHeaderHidden(true);
     m_audioTree->setRootIsDecorated(false);
-    m_audioTree->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
     m_audioTree->setEnabled(enableFields);
 
     for(int i = 0; i < audioList.size(); ++i) {
@@ -88,8 +89,7 @@ MachineConfigAudio::MachineConfigAudio(Machine *machine,
     m_audioTreeLayout->setAlignment(Qt::AlignTop);
     m_audioTreeLayout->setSpacing(5);
     m_audioTreeLayout->addWidget(m_audioTree);
-    m_audioTreeLayout->addWidget(m_moveUpAudioToolButton);
-    m_audioTreeLayout->addWidget(m_moveDownAudioToolButton);
+    m_audioTreeLayout->addItem(buttonLayout);
 
     m_hostSoundSystemLabel = new QLabel(tr("Host sound system") + ":", this);
 
