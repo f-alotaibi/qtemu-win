@@ -171,7 +171,7 @@ bool MachineUtils::deleteMachine(const QUuid machineUuid)
     QString machinePath;
     while(machinePos < machines.size() && ! machineExists) {
         QJsonObject machineJSON = machines[machinePos].toObject();
-        if (machineUuid == machineJSON["uuid"].toVariant()) {
+        if (machineUuid == QUuid().fromString(machineJSON["uuid"].toString())) {
             machineExists = true;
             machinePath = machineJSON["path"].toString();
         } else {
@@ -179,9 +179,13 @@ bool MachineUtils::deleteMachine(const QUuid machineUuid)
         }
     }
 
-    if (machineExists) {
-        machines.removeAt(machinePos);
+    if (!machineExists) {
+        if (machinesFile.isOpen()) {
+            machinesFile.close();
+        }
+        return false;
     }
+    machines.removeAt(machinePos);
 
     QJsonObject machinesObject;
     machinesObject["machines"] = machines;
@@ -190,12 +194,13 @@ bool MachineUtils::deleteMachine(const QUuid machineUuid)
     machinesFile.seek(0);
     machinesFile.resize(0);
     machinesFile.write(machinesDocumentJSON.toJson());
-    if (machinesFile.isOpen()) {
-        machinesFile.close();
-    }
+
+    bool removedDirectory = false;
 
     QDir *machineDirectory = new QDir(QDir::toNativeSeparators(machinePath));
-    bool removedDirectory = machineDirectory->removeRecursively();
+    if (machineDirectory->exists()) {
+        removedDirectory = machineDirectory->removeRecursively();
+    }
 
     return removedDirectory;
 }
